@@ -1,0 +1,4 @@
+- name: create kubernetes.repo
+  template:
+    src: kubernetes.j2
+    dest: "/etc/yum.repos.d/kubernetes.repo"
