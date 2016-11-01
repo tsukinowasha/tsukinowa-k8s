@@ -1,0 +1,37 @@
+- name: hostname 設定
+  hostname: name="tsukinowa-k8s"
+
+- name: hosts 設定
+  lineinfile:
+    dest="/etc/hosts"
+    state=present
+    create=yes
+    line="127.0.0.1 {{ k8s_role[0] | regex_replace('_', '-') }}-{{ inventory_hostname }}"
+
+- name: create user group
+  group: name="{{ username }}"
+
+- name: create user
+  user:
+    name: "{{ username }}"
+    groups: "{{ username }},systemd-journal"
+    shell: /bin/bash
+    state: present
+
+- name: set sudoers file
+  template:
+    src: sudoers.j2
+    dest: "/etc/sudoers.d/{{ username }}"
+    owner: root
+    group: root
+    mode: 0440
+
+- name: add public key
+  authorized_key:
+    user: "{{ username }}"
+    key: "{{ item }}"
+  with_items: "{{ developer_pub_keys }}"
+  tags: add_user
+  when:
+    - k8s_role is defined
+    - '"step" in k8s_role or mode == "development"'
