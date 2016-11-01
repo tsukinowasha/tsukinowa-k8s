@@ -1,5 +1,5 @@
 - name: hostname 設定
-  hostname: name="tsukinowa-k8s"
+  hostname: name="k8s-{{ inventory_hostname }}"
 
 - name: hosts 設定
   lineinfile:
