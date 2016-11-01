@@ -6,7 +6,7 @@
     dest="/etc/hosts"
     state=present
     create=yes
-    line="{{ inventory_hostname }}"
+    line="127.0.0.1 k8s-{{ inventory_hostname }}"
 
 - name: create user group
   group: name="{{ username }}"
