@@ -32,6 +32,3 @@
     key: "{{ item }}"
   with_items: "{{ developer_pub_keys }}"
   tags: add_user
-  when:
-    - k8s_role is defined
-    - '"step" in k8s_role or mode == "development"'
