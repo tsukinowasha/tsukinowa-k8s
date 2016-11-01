@@ -5,3 +5,12 @@
 
 - name: setenforce 0
   command: setenforce 0
+
+- name: install packages
+  yum: name="{{ item }}" state=installed
+  with_items:
+    - docker
+    - kubelet
+    - kubeadm
+    - kubectl
+    - kubernetes-cni
