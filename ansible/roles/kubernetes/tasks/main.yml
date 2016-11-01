@@ -10,8 +10,10 @@
       - https://packages.cloud.google.com/yum/doc/yum-key.gpg
       - https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
 
+- name: install libselinux-python
+  yum: name=libselinux-python state=present
 - name: setenforce 0
-  command: setenforce 0
+  selinux: state=disabled conf=/etc/selinux/semanage.conf
 
 - name: install packages
   yum: name="{{ item }}" state=installed
