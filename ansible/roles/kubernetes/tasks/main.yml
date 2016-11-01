@@ -14,3 +14,9 @@
     - kubeadm
     - kubectl
     - kubernetes-cni
+
+- name: docker service start and enabled
+  service: name=docker enabled=yes state=started
+
+- name: kubelet service start and enabled
+  service: name=kubelet enabled=yes state=started
