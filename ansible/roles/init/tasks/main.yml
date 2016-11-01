@@ -32,4 +32,3 @@
     key: "{{ item }}"
   with_items: "{{ developer_pub_keys }}"
   tags: add_user
-  when: username.createhome is defined and username.createhome == true
