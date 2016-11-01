@@ -2,3 +2,6 @@
   template:
     src: kubernetes.j2
     dest: "/etc/yum.repos.d/kubernetes.repo"
+
+- name: setenforce 0
+  command: setenforce 0
