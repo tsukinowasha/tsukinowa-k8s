@@ -8,6 +8,17 @@
     repo_gpgcheck: yes
     gpgkey: https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
 
+- name: import rpm_key
+  rpm_key: state=present key=https://packages.cloud.google.com/yum/doc/yum-key.gpg
+- name: import rpm-package-key
+  rpm_key: state=present key=https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+
+
+- name: import rpm_key
+  rpm_key:
+    state: present
+    key: https://packages.cloud.google.com/yum/doc/yum-key.gpg  https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+
 - name: install packages
   yum: name="{{ item }}" state=installed
   with_items:
