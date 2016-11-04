@@ -1,3 +1,5 @@
+# CentOS
+
 - name: add kubernetes repo
   yum_repository:
     name: kubernetes
@@ -33,3 +35,28 @@
 - name: kubelet service start and enabled
   service: name=kubelet enabled=yes state=started
   when: ansible_distribution == 'CentOS'
+
+
+# Ubuntu
+
+- name: import apt-key
+  apt_key: url=https://packages.cloud.google.com/apt/doc/apt-key.gpg state=present
+  when: ansible_distribution == 'Ubuntu'
+
+- name: add kubernetes.list
+  lineinfile:
+    dest: "/etc/apt/sources.list.d/kubernetes.list"
+    state: present
+    create: yes
+    line: "deb http://apt.kubernetes.io/ kubernetes-xenial main"
+  when: ansible_distribution == 'Ubuntu'
+
+- name: install packages
+  apt: name={{ item }} state=latest update_cache=yes
+  with_items:
+    - docker.io
+    - kubelet
+    - kubeadm
+    - kubectl
+    - kubernetes-cni
+  when: ansible_distribution == 'Ubuntu'
