@@ -7,12 +7,14 @@
     gpgcheck: yes
     repo_gpgcheck: yes
     gpgkey: https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+    when: ansible_distribution == 'CentOS'
 
 - name: import rpm_key
   rpm_key: state=present key={{ item }}
   with_items:
     - https://packages.cloud.google.com/yum/doc/yum-key.gpg
     - https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+  when: ansible_distribution == 'CentOS'
 
 - name: install packages
   yum: name="{{ item }}" state=installed update_cache=yes
@@ -22,9 +24,12 @@
     - kubeadm
     - kubectl
     - kubernetes-cni
+  when: ansible_distribution == 'CentOS'
 
 - name: docker service start and enabled
   service: name=docker enabled=yes state=started
+  when: ansible_distribution == 'CentOS'
 
 - name: kubelet service start and enabled
   service: name=kubelet enabled=yes state=started
+  when: ansible_distribution == 'CentOS'
