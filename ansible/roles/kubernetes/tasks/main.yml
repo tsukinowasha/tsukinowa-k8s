@@ -9,7 +9,7 @@
     gpgcheck: yes
     repo_gpgcheck: yes
     gpgkey: https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
-    when: ansible_distribution == 'CentOS'
+  when: ansible_distribution == 'CentOS'
 
 - name: import rpm_key
   rpm_key: state=present key={{ item }}
